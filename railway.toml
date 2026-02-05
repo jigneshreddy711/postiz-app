@@ -2,11 +2,7 @@
 builder = "dockerfile"
 dockerfilePath = "Dockerfile.backend"
 
-[deploy]
-healthcheckPath = "/api/health"
-healthcheckTimeout = 300
-restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 3
+
 
 [phases.setup]
 nixPkgs = ['nodejs', 'python3', 'openssl']
