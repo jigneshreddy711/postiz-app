@@ -62,6 +62,7 @@ async function start() {
   loadSwagger(app);
 
   const port = process.env.PORT || 3000;
+  Logger.log(`Attempting to bind to port: ${port}`);
 
   try {
     await app.listen(port, '0.0.0.0');
