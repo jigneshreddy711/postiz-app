@@ -70,7 +70,7 @@ export class AuthController {
       }
 
       response.cookie('auth', jwt, {
-        domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
+        // domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
         ...(!process.env.NOT_SECURED
           ? {
               secure: true,
@@ -87,7 +87,7 @@ export class AuthController {
 
       if (typeof addedOrg !== 'boolean' && addedOrg?.organizationId) {
         response.cookie('showorg', addedOrg.organizationId, {
-          domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
+          // domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
           ...(!process.env.NOT_SECURED
             ? {
                 secure: true,
@@ -135,7 +135,7 @@ export class AuthController {
       );
 
       response.cookie('auth', jwt, {
-        domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
+        // domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
         ...(!process.env.NOT_SECURED
           ? {
               secure: true,
@@ -152,7 +152,7 @@ export class AuthController {
 
       if (typeof addedOrg !== 'boolean' && addedOrg?.organizationId) {
         response.cookie('showorg', addedOrg.organizationId, {
-          domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
+          // domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
           ...(!process.env.NOT_SECURED
             ? {
                 secure: true,
@@ -216,7 +216,7 @@ export class AuthController {
     }
 
     response.cookie('auth', activate, {
-      domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
+      // domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
       ...(!process.env.NOT_SECURED
         ? {
             secure: true,
@@ -264,7 +264,7 @@ export class AuthController {
     }
 
     response.cookie('auth', jwt, {
-      // domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
+      domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
       ...(!process.env.NOT_SECURED
         ? {
             secure: true,
