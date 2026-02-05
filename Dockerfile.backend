@@ -14,24 +14,25 @@ RUN npm --no-update-notifier --no-fund --global install pnpm@10.6.1
 
 WORKDIR /app
 
-# Copy entire project (pnpm workspaces need full context for dependency resolution)
+# Copy entire project
 COPY . /app
 
-# Install ALL dependencies
-RUN pnpm install
+# Configure pnpm for Docker environment and install
+RUN pnpm config set inject-workspace-packages false
+RUN pnpm install --shamefully-hoist
 
 # Generate Prisma client
 RUN pnpm run prisma-generate
 
-# Build only backend and orchestrator (not frontend)
+# Build only backend and orchestrator
 RUN NODE_OPTIONS="--max-old-space-size=4096" pnpm run build:backend
 RUN NODE_OPTIONS="--max-old-space-size=4096" pnpm run build:orchestrator
 
-# Clean up frontend source to reduce image size (optional)
+# Clean up to reduce image size
 RUN rm -rf /app/apps/frontend/src /app/apps/extension
 
 # Expose backend port
 EXPOSE 3000
 
-# Start command - runs Prisma push and starts backend
+# Start command
 CMD ["sh", "-c", "pnpm run prisma-db-push && pnpm run start:prod:backend"]
