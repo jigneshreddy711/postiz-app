@@ -74,6 +74,9 @@ async function start() {
     checkConfiguration(); // Do this last, so that users will see obvious issues at the end of the startup log without having to scroll up.
 
     Logger.log(`🚀 Backend is running on: http://localhost:${port}`);
+    Logger.log(`Attempting to bind to port: ${port}`);
+    Logger.log(`NOT_SECURED value: "${process.env.NOT_SECURED}"`);
+    Logger.log(`FRONTEND_URL value: "${process.env.FRONTEND_URL}"`);
   } catch (e) {
     Logger.error(`Backend failed to start on port ${port}`, e);
   }
