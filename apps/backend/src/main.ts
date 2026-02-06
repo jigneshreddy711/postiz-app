@@ -63,6 +63,8 @@ async function start() {
 
   const port = process.env.PORT || 3000;
   Logger.log(`Attempting to bind to port: ${port}`);
+  Logger.log(`NOT_SECURED value: "${process.env.NOT_SECURED}"`);
+  Logger.log(`FRONTEND_URL value: "${process.env.FRONTEND_URL}"`);
 
   try {
     await app.listen(port, '0.0.0.0');
