@@ -264,7 +264,7 @@ export class AuthController {
     }
 
     response.cookie('auth', jwt, {
-      domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
+      // domain: getCookieUrlFromDomain(process.env.FRONTEND_URL!),
       ...(!process.env.NOT_SECURED
         ? {
             secure: true,
