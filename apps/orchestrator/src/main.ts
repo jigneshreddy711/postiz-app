@@ -11,23 +11,23 @@ import utc from 'dayjs/plugin/utc';
 dayjs.extend(utc);
 
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '@gitroom/orchestrator/app.module';
+import { AppModule } from './app.module';
 import * as dns from 'node:dns';
 dns.setDefaultResultOrder('ipv4first');
 
 async function bootstrap() {
-  console.log('[Orchestrator] Starting Nest application context...');
+  console.log('[Orchestrator] Starting Nest application...');
   try {
-    const app = await NestFactory.createApplicationContext(AppModule);
+    const app = await NestFactory.create(AppModule);
     app.enableShutdownHooks();
-    console.log('[Orchestrator] Nest application context initialized successfully.');
     
-    // Keep-alive interval to prevent process from exiting if Temporal takes time to connect
-    setInterval(() => {
-      // Just to keep the event loop busy
-    }, 1000 * 60 * 60);
+    const port = process.env.PORT || 8081;
+    console.log(`[Orchestrator] Attempting to listen on port: ${port}`);
+    
+    await app.listen(port, '0.0.0.0');
+    console.log(`[Orchestrator] Nest application is listening on port: ${port}`);
   } catch (err) {
-    console.error('[Orchestrator] Failed to initialize Nest application context:', err);
+    console.error('[Orchestrator] Failed to initialize Nest application:', err);
     process.exit(1);
   }
 }
