@@ -112,9 +112,9 @@ export class LinkedinProvider extends SocialAbstract implements SocialProvider {
   async generateAuthUrl() {
     const state = makeId(6);
     const codeVerifier = makeId(30);
-    const redirectUri = `${process.env.FRONTEND_URL}/integrations/social/linkedin`;
+    const redirectUri = new URL('/integrations/social/linkedin', process.env.FRONTEND_URL).toString();
     console.log('LinkedIn Redirect URI:', redirectUri);
-    const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&prompt=none&client_id=${
+    const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${
       process.env.LINKEDIN_CLIENT_ID
     }&redirect_uri=${encodeURIComponent(
       redirectUri
@@ -135,12 +135,7 @@ export class LinkedinProvider extends SocialAbstract implements SocialProvider {
     body.append('grant_type', 'authorization_code');
     body.append('code', params.code);
     const redirectUri = new URL('/integrations/social/linkedin', process.env.FRONTEND_URL).toString();
-    body.append(
-      'redirect_uri',
-      `${redirectUri}${
-        params.refresh ? `?refresh=${params.refresh}` : ''
-      }`
-    );
+    body.append('redirect_uri', redirectUri);
     body.append('client_id', process.env.LINKEDIN_CLIENT_ID!);
     body.append('client_secret', process.env.LINKEDIN_CLIENT_SECRET!);
 

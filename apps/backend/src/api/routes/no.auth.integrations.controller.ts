@@ -60,7 +60,14 @@ export class NoAuthIntegrationsController {
     const getCodeVerifier = integrationProvider.customFields
       ? 'none'
       : await ioRedis.get(`login:${body.state}`);
+    
     if (!getCodeVerifier) {
+      console.log('State mismatch!', { 
+        state: body.state, 
+        integration, 
+        hasCustomFields: !!integrationProvider.customFields,
+        bodyCode: !!body.code
+      });
       throw new Error('Invalid state');
     }
 
