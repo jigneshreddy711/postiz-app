@@ -12,6 +12,7 @@ export class TemporalRegister implements OnModuleInit {
   constructor(private _client: TemporalService) {}
 
   async onModuleInit(): Promise<void> {
+    console.log('[Temporal] Starting search attribute registration check...');
     const connection = this._client?.client?.getRawClient()
       ?.connection as Connection;
 

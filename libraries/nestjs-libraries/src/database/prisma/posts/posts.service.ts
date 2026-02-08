@@ -606,7 +606,10 @@ export class PostsService {
           ]),
         });
     } catch (err: any) {
-      if (err?.message?.includes('mapping defined for search attribute')) {
+      if (
+        err?.message?.includes('search attribute') ||
+        err?.cause?.message?.includes('search attribute')
+      ) {
         console.warn(`[Temporal] Search attributes not registered, retrying without them for postId: ${postId}`);
         try {
           await this._temporalService.client
