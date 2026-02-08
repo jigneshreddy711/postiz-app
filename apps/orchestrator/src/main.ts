@@ -1,3 +1,10 @@
+console.log('[Orchestrator] File main.ts loaded');
+process.on('uncaughtException', (err) => {
+  console.error('[Orchestrator] Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[Orchestrator] Unhandled Rejection at:', promise, 'reason:', reason);
+});
 import 'source-map-support/register';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
