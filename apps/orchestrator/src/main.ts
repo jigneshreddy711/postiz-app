@@ -1,4 +1,5 @@
 console.log('[Orchestrator] File main.ts loaded');
+console.log('[Orchestrator] Current Directory:', process.cwd());
 process.on('uncaughtException', (err) => {
   console.error('[Orchestrator] Uncaught Exception:', err);
 });
@@ -22,10 +23,10 @@ async function bootstrap() {
     app.enableShutdownHooks();
     
     const port = process.env.PORT || 8081;
-    console.log(`[Orchestrator] Attempting to listen on port: ${port}`);
+    console.log(`[Orchestrator] Attempting to listen on port: ${port} (0.0.0.0)`);
     
     await app.listen(port, '0.0.0.0');
-    console.log(`[Orchestrator] Nest application is listening on port: ${port}`);
+    console.log(`[Orchestrator] Nest application is listening and healthy on port: ${port}`);
   } catch (err) {
     console.error('[Orchestrator] Failed to initialize Nest application:', err);
     process.exit(1);
