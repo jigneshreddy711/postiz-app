@@ -6,6 +6,10 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason, promise) => {
   console.error('[Orchestrator] Unhandled Rejection at:', promise, 'reason:', reason);
 });
+
+import { Runtime } from '@temporalio/worker';
+Runtime.install({ shutdownSignals: [] });
+
 import 'source-map-support/register';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
