@@ -646,6 +646,7 @@ export class LinkedinProvider extends SocialAbstract implements SocialProvider {
     integration: Integration,
     type = 'personal' as 'company' | 'personal'
   ): Promise<PostResponse[]> {
+    console.log(`[LinkedinProvider] post called for id: ${id}, type: ${type}`);
     let processedPostDetails = postDetails;
     const [firstPost] = postDetails;
 

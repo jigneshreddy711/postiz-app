@@ -553,6 +553,7 @@ export class PostsService {
     orgId: string,
     state: State
   ) {
+    console.log(`[Backend] startWorkflow called for postId: ${postId}, taskQueue: ${taskQueue}, state: ${state}`);
     try {
       const workflows = this._temporalService.client
         .getRawClient()
@@ -604,7 +605,9 @@ export class PostsService {
             },
           ]),
         });
-    } catch (err) {}
+    } catch (err) {
+      console.error('Failed to start workflow', err);
+    }
   }
 
   async createPost(orgId: string, body: CreatePostDto): Promise<any[]> {

@@ -150,6 +150,7 @@ export class PostActivity {
 
   @ActivityMethod()
   async postSocial(integration: Integration, posts: Post[]) {
+    console.log(`[Orchestrator] postSocial picked up for integration: ${integration.providerIdentifier}, orgId: ${integration.organizationId}`);
     const getIntegration = this._integrationManager.getSocialIntegration(
       integration.providerIdentifier
     );
