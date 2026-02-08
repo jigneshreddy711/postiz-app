@@ -605,7 +605,29 @@ export class PostsService {
             },
           ]),
         });
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.message?.includes('mapping defined for search attribute')) {
+        console.warn(`[Temporal] Search attributes not registered, retrying without them for postId: ${postId}`);
+        try {
+          await this._temporalService.client
+            .getRawClient()
+            ?.workflow.start('postWorkflowV101', {
+              workflowId: `post_${postId}`,
+              taskQueue: 'main',
+              workflowIdConflictPolicy: 'TERMINATE_EXISTING',
+              args: [
+                {
+                  taskQueue: taskQueue,
+                  postId: postId,
+                  organizationId: orgId,
+                },
+              ],
+            });
+          return;
+        } catch (retryErr) {
+          console.error('Failed to start workflow even without search attributes', retryErr);
+        }
+      }
       console.error('Failed to start workflow', err);
     }
   }

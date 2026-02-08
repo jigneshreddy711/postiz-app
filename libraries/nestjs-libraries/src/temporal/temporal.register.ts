@@ -26,6 +26,7 @@ export class TemporalRegister implements OnModuleInit {
     );
 
     if (missingAttributes.length > 0) {
+      console.log(`[Temporal] Missing search attributes: ${missingAttributes.join(', ')}. Attempting to register...`);
       try {
         await connection.operatorService.addSearchAttributes({
           namespace: process.env.TEMPORAL_NAMESPACE || 'default',
@@ -35,9 +36,12 @@ export class TemporalRegister implements OnModuleInit {
             return all;
           }, {}),
         });
+        console.log('[Temporal] Successfully registered missing search attributes.');
       } catch (e) {
-        console.error('Failed to register search attributes', e);
+        console.error('[Temporal] Failed to register search attributes', e);
       }
+    } else {
+      console.log('[Temporal] All required search attributes are already registered.');
     }
   }
 }
