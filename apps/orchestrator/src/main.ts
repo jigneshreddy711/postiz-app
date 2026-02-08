@@ -9,9 +9,20 @@ import * as dns from 'node:dns';
 dns.setDefaultResultOrder('ipv4first');
 
 async function bootstrap() {
-  // some comment again
-  const app = await NestFactory.createApplicationContext(AppModule);
-  app.enableShutdownHooks();
+  console.log('[Orchestrator] Starting Nest application context...');
+  try {
+    const app = await NestFactory.createApplicationContext(AppModule);
+    app.enableShutdownHooks();
+    console.log('[Orchestrator] Nest application context initialized successfully.');
+    
+    // Keep-alive interval to prevent process from exiting if Temporal takes time to connect
+    setInterval(() => {
+      // Just to keep the event loop busy
+    }, 1000 * 60 * 60);
+  } catch (err) {
+    console.error('[Orchestrator] Failed to initialize Nest application context:', err);
+    process.exit(1);
+  }
 }
 
 bootstrap();
